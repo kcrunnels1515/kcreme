@@ -1,13 +1,15 @@
-Int -> [0-9]+
-Float -> [0-9]+'.'[0-9]+ | [0-9]+'e''+'[0-9]+
-Number -> Int | Float | '-'Number
-Str -> [a-zA-Z]+
-Atom -> Str | Number | StrNumber
+terminals -> Int Float Str '+' '-' '*' '/' 'quote' 'atom' 'eq' 'cons' 'car' 'cdr' 'cond' '(' ')' '"'
+Start -> Symbol | Sexpr
+Sexpr -> OP Oper Arg CP | OP Sexpr Arg CP
+Quote -> OP 'quote' Atom CP | OP 'quote' Sexpr CP | '''Atom | '''Sexpr
+Arg -> Atom | Sexpr | Atom Arg | Sexpr Arg | NIL
+Tdecl -> Atom : Atom
+Atom -> Str | Number | Bool
+Symbol -> Str
+Bool -> '#t' | '#f'
 Oper -> '+' | '-' | '*' | '/' | 'quote' | 'atom' | 'eq' | 'cons' | 'car' | 'cdr' | 'cond'
-OP -> '('
-CP -> ')'
-Arg -> Atom | Sexpr | Atom Arg | Sexpr Arg
-Sexpr -> OP Oper Arg CP | OP Sexpr Arg CP | ''' Sexpr
+String -> '"' Str '"'
+Number -> Int | Float | '-' Number
 
 //
 (define a
@@ -17,4 +19,47 @@ Sexpr -> OP Oper Arg CP | OP Sexpr Arg CP | ''' Sexpr
             (+ a
                (- b c))
            )
-    )
+
+)
+
+
+(+ 1 2 (- 3 4))
+
+
+params in order -> rdi, rsi, rdx, rcx, r8, r9, and further values are passed on the stack in reverse order
+
+Functions are called using the call instruction that pushes the address of the next instruction to the stack and jumps to the operand
+
+Functions return to the caller using the ret instruction that pops a value from the stack and jump to it. The stack is 16-byte aligned just before the call instruction is called.
+
+Functions preserve the registers rbx, rsp, rbp, r12, r13, r14, and r15; while rax, rdi, rsi, rdx, rcx, r8, r9, r10, r11 are scratch registers. The return value is stored in the rax register, or if it is a 128-bit value, then the higher 64-bits go in rdx.
+
+
+
+; old rbp
+; address of pointer to save location of output in
+; pointer to c function to allocate output, and return data size
+dc.b 1
+dc.b 2
+dc.b 3
+dc.b 4
+
+mov     -2(%rbp),   %rdi
+mov     -1(%rbp),   %rsi
+sub         %rdi,   %rsi
+
+pop
+pop
+
+push        %rsi
+mov         %rsp,   %rbp
+
+mov     -2(%rbp),   %rdi
+mov     -1(%rbp),   %rsi
+add         %rdi,   %rsi
+mov     -3(%rbp),   %rdi
+add         %rdi,   %rsi
+
+pop
+pop
+pop

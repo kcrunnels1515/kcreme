@@ -8,23 +8,10 @@
 #include <vector>
 #include <sys/mman.h>
 #include <iostream>
+#include "../Defs/Defs.hpp"
 
 #define PAGE 4096
 
-enum TokenType {
-  NIL,
-  OP,
-  CP,
-  SQ,
-  DELIM,
-  STR,
-  INT,
-  FLOAT,
-  ATOM,
-  OPER,
-  SEXPR,
-  TDECL
-};
 
 // first 2 bits: Type value, next 14 bits: type identifier,
 // last 48 bits: pointer to data

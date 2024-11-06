@@ -1,11 +1,5 @@
 #include "Parser.hpp"
 
-// check stack boundaries
-#define CSB (size, ind, code)  \
-  if ((size - 1 - ind) >= 0) { \
-    code                       \
-  }                            \
-
 inline bool is_int(const std::string & s) // https://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int
 {
    if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
@@ -47,7 +41,7 @@ Node::~Node() {
   }
 }
 
-Parser::Parser(std::map<std::string,unsigned>& _oper_names) : oper_names(_oper_names), node_num(0) {}
+Parser::Parser(std::map<std::string,unsigned>& _oper_int, std::map<unsigned,std::string>& _oper_asm) : oper_to_int(_oper_int), int_to_asm(_oper_asm), node_num(0) {}
 
 void Parser::lex(std::string& text){
   std::string accum = "";
@@ -121,6 +115,7 @@ void Parser::lex(std::string& text){
           this->in_strm.push(tmp);
         }
         break;
+
       // case ',':
       //   if (!accum.empty()) {
       //     Token* tmp = new Token(NIL);
@@ -163,11 +158,15 @@ void Parser::parse_tok(Node* tk, std::string s) {
     tk->value = malloc(sizeof(double));
     memcpy(tk->value, &d, sizeof(double));
   // OPERATOR NAME
-  } else if (this->oper_names.find(s) != this->oper_names.end()) {
+  } else if (this->oper_to_int.find(s) != this->oper_to_int.end()) {
     tk->ttype = OPER;
     tk->size = sizeof(unsigned);
     tk->value = malloc(sizeof(unsigned));
-    memcpy(tk->value, &this->oper_names[s], sizeof(unsigned));
+    memcpy(tk->value, &this->oper_to_int[s], sizeof(unsigned));
+  } else if (s == "quote") {
+    tk->ttype = QUOTE;
+    tk->size = 0;
+    tk->value = NULL;
   } else {
     tk->ttype = STR;
     tk->size = s.size() + 1;
@@ -185,10 +184,16 @@ void Parser::reduce(int pos, int len, bool delim) {
     // identify functional node
     Node* fn = this->stack[pos+1];
     if (fn->ttype == QUOTE) {
+      delete new_node;
       new_node = fn;
     } else {
       new_node->chldrn.push_back(fn);
     }
+
+    // won't work for lists beginning with a list, fix later
+    // if first token is not a operator or list, place following
+    // tokens in new_node
+    if (fn->ttype != OPER && fn->ttype != SEXPR) fn = new_node;
 
     // dont include CP in tree
     for (int i = pos+2; i < pos+len-1; ++i)
@@ -247,12 +252,14 @@ void Parser::parse(std::string& text) {
         paren_locs.pop_back();
 
         // if last squote is the previous node, reduce to quote
-        if (sq_loc == this->stack.size() - 2) this->reduce(this->stack.size() - 2, 2, false);
-        // stupid hacky fix so that positional checking doesn't pass a -1 into reduce
-        sq_loc = -5;
+        if (sq_loc == this->stack.size() - 2) {
+          this->reduce(sq_loc, 2, false);
+          // stupid hacky fix so that positional checking doesn't pass a -1 into reduce
+          sq_loc = -5;
+        }
 
         // if previous node is a delim, reduce with delim
-        if (this->stack[this->stack.size() - 2]->ttype == DELIM) {
+        if (sc_type(1,DELIM)) {
           this->reduce(this->stack.size() - 3, 3, true);
         }
         break;
@@ -268,9 +275,12 @@ void Parser::parse(std::string& text) {
       case FLOAT:
         this->reduce(this->stack.size() - 1, 1, false);
         // if last squote is the previous node, reduce to quote
-        if (sq_loc == this->stack.size() - 2) this->reduce(this->stack.size() - 2, 2, false);
-        // stupid hacky fix so that positional checking doesn't pass a -1 into reduce
-        sq_loc = -5;
+        if (sq_loc == this->stack.size() - 2) {
+          this->reduce(this->stack.size() - 2, 2, false);
+          // stupid hacky fix so that positional checking doesn't pass a -1 into reduce
+          sq_loc = -5;
+        }
+
       case ATOM:
       case OPER:
         break;
@@ -320,6 +330,9 @@ void Parser::recursive_print(Node* nd, std::vector<bool> flag, int depth = 0, bo
         break;
       case TDECL:
         ans = "???";
+        break;
+      case QUOTE:
+        ans = "QUOTE";
         break;
       default:
         ans = "ayo what fam";
@@ -393,4 +406,78 @@ void Parser::print_parse_tree(){
 void Parser::clear() {
   stack.clear();
   node_num = 0;
+}
+
+bool Parser::sc_type(int offset, TokenType t){
+  int ind = this->stack.size() - 1 - offset;
+  if (offset < 0) return false;
+  if (ind >= 0) {
+    return this->stack[ind]->ttype == t;
+  }
+  return false;
+}
+
+void Parser::emit_code() {
+
+  // make this recursive to print SEXPR values
+  auto emit_atom = [](Node* n) -> std::string {
+    // n is the ATOM node
+    void* chld = (int*)n->chldrn[0]->value;
+    std::string s = "push ";
+    // check various ATOM types
+    switch (n->chldrn[0]->ttype) {
+      case INT:
+        s += std::to_string(*(int*)chld) + ";\n";
+        break;
+      case FLOAT:
+        s += std::to_string(*(double*)chld) + ";\n";
+        break;
+      case STR:
+        {
+          s = "";
+          std::string g = (char*)chld;
+          s += "push" + g + ";\n";
+          break;
+        }
+      default:
+        s += "ayo bruh what\n";
+        break;
+
+    }
+    return s;
+  };
+
+  // level-order tranversal of AST
+  Node* cur = this->stack[0];
+  std::string args = "", code_part = "";
+  std::queue<Node*> pre_order;
+  pre_order.push(cur);
+
+  while(!pre_order.empty()) {
+    cur = pre_order.front();
+    pre_order.pop();
+
+    // if node is ATOM, insert its value into the stack
+    // remember to change this to make quoting mean something
+    // by adding symbols
+    if (cur->ttype == ATOM) {
+      args += emit_atom(cur);
+    } else {
+      for (Node *i : cur->chldrn) {
+        pre_order.push(i);
+      }
+      if (cur->ttype == OPER) {
+        code_part = "push "
+                  + std::to_string(cur->chldrn.size())
+                  + ";\n"
+                  + this->int_to_asm[*(unsigned*)cur->value]
+                  + code_part;
+      }
+    }
+  }
+  this->code = args + code_part;
+}
+
+void Parser::print_code() {
+  std::cout << this->code << std::endl;
 }
