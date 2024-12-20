@@ -5,7 +5,11 @@ enum TokenType {
   NIL,
   SEXPR,
   ID,
-  LIT,
+  INT,
+  FLOAT,
+  CHAR,
+  STR,
+  VEC,
   QUOTE
 };
   // NIL,    // nothing value

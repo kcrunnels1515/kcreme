@@ -1,0 +1,617 @@
+<?xml version="1.0"?>
+
+<bison-xml-report version="3.8.2" bug-report="bug-bison@gnu.org" url="https://www.gnu.org/software/bison/">
+
+  <filename>kcreme.y</filename>
+
+  <grammar>
+    <rules>
+      <rule number="0" usefulness="useful">
+        <lhs>$accept</lhs>
+        <rhs>
+          <symbol>program</symbol>
+          <symbol>$end</symbol>
+        </rhs>
+      </rule>
+      <rule number="1" usefulness="useful">
+        <lhs>program</lhs>
+        <rhs>
+          <symbol>list</symbol>
+        </rhs>
+      </rule>
+      <rule number="2" usefulness="useful">
+        <lhs>sexpr</lhs>
+        <rhs>
+          <symbol>'('</symbol>
+          <symbol>')'</symbol>
+        </rhs>
+      </rule>
+      <rule number="3" usefulness="useful">
+        <lhs>sexpr</lhs>
+        <rhs>
+          <symbol>'('</symbol>
+          <symbol>list</symbol>
+          <symbol>')'</symbol>
+        </rhs>
+      </rule>
+      <rule number="4" usefulness="useful">
+        <lhs>sexpr</lhs>
+        <rhs>
+          <symbol>'('</symbol>
+          <symbol>OPR</symbol>
+          <symbol>list</symbol>
+          <symbol>')'</symbol>
+        </rhs>
+      </rule>
+      <rule number="5" usefulness="useful">
+        <lhs>list</lhs>
+        <rhs>
+          <symbol>atom</symbol>
+        </rhs>
+      </rule>
+      <rule number="6" usefulness="useful">
+        <lhs>list</lhs>
+        <rhs>
+          <symbol>sexpr</symbol>
+        </rhs>
+      </rule>
+      <rule number="7" usefulness="useful">
+        <lhs>list</lhs>
+        <rhs>
+          <symbol>list</symbol>
+          <symbol>atom</symbol>
+        </rhs>
+      </rule>
+      <rule number="8" usefulness="useful">
+        <lhs>list</lhs>
+        <rhs>
+          <symbol>list</symbol>
+          <symbol>sexpr</symbol>
+        </rhs>
+      </rule>
+      <rule number="9" usefulness="useful">
+        <lhs>list</lhs>
+        <rhs>
+          <symbol>QUOTE</symbol>
+          <symbol>atom</symbol>
+        </rhs>
+      </rule>
+      <rule number="10" usefulness="useful">
+        <lhs>list</lhs>
+        <rhs>
+          <symbol>QUOTE</symbol>
+          <symbol>sexpr</symbol>
+        </rhs>
+      </rule>
+      <rule number="11" usefulness="useful">
+        <lhs>atom</lhs>
+        <rhs>
+          <symbol>INT</symbol>
+        </rhs>
+      </rule>
+      <rule number="12" usefulness="useful">
+        <lhs>atom</lhs>
+        <rhs>
+          <symbol>CHR</symbol>
+        </rhs>
+      </rule>
+      <rule number="13" usefulness="useful">
+        <lhs>atom</lhs>
+        <rhs>
+          <symbol>STR</symbol>
+        </rhs>
+      </rule>
+      <rule number="14" usefulness="useful">
+        <lhs>atom</lhs>
+        <rhs>
+          <symbol>FLT</symbol>
+        </rhs>
+      </rule>
+      <rule number="15" usefulness="useful">
+        <lhs>atom</lhs>
+        <rhs>
+          <symbol>IDN</symbol>
+        </rhs>
+      </rule>
+    </rules>
+    <terminals>
+      <terminal symbol-number="0" token-number="0" name="$end" type="" usefulness="useful"/>
+      <terminal symbol-number="14" token-number="40" name="'('" type="" usefulness="useful"/>
+      <terminal symbol-number="15" token-number="41" name="')'" type="" usefulness="useful"/>
+      <terminal symbol-number="1" token-number="256" name="error" type="" usefulness="useful"/>
+      <terminal symbol-number="3" token-number="258" name="IDN" type="string" usefulness="useful"/>
+      <terminal symbol-number="4" token-number="259" name="STR" type="string" usefulness="useful"/>
+      <terminal symbol-number="5" token-number="260" name="CHR" type="string" usefulness="useful"/>
+      <terminal symbol-number="6" token-number="261" name="INT" type="string" usefulness="useful"/>
+      <terminal symbol-number="7" token-number="262" name="FLT" type="string" usefulness="useful"/>
+      <terminal symbol-number="8" token-number="263" name="OPR" type="string" usefulness="useful"/>
+      <terminal symbol-number="9" token-number="264" name="NIL" type="token" usefulness="unused-in-grammar"/>
+      <terminal symbol-number="10" token-number="265" name="LIST" type="token" usefulness="unused-in-grammar"/>
+      <terminal symbol-number="11" token-number="266" name="VEC" type="token" usefulness="unused-in-grammar"/>
+      <terminal symbol-number="12" token-number="267" name="QUOTE" type="token" usefulness="useful"/>
+      <terminal symbol-number="13" token-number="268" name="SEXPR" type="token" usefulness="unused-in-grammar"/>
+    </terminals>
+    <nonterminals>
+      <nonterminal symbol-number="16" name="$accept" type="" usefulness="useful"/>
+      <nonterminal symbol-number="17" name="program" type="" usefulness="useful"/>
+      <nonterminal symbol-number="18" name="sexpr" type="sexpr" usefulness="useful"/>
+      <nonterminal symbol-number="19" name="list" type="list" usefulness="useful"/>
+      <nonterminal symbol-number="20" name="atom" type="atom" usefulness="useful"/>
+    </nonterminals>
+  </grammar>
+
+  <automaton>
+
+    <state number="0">
+      <itemset>
+        <item rule-number="0" dot="0"/>
+        <item rule-number="1" dot="0"/>
+        <item rule-number="2" dot="0"/>
+        <item rule-number="3" dot="0"/>
+        <item rule-number="4" dot="0"/>
+        <item rule-number="5" dot="0"/>
+        <item rule-number="6" dot="0"/>
+        <item rule-number="7" dot="0"/>
+        <item rule-number="8" dot="0"/>
+        <item rule-number="9" dot="0"/>
+        <item rule-number="10" dot="0"/>
+        <item rule-number="11" dot="0"/>
+        <item rule-number="12" dot="0"/>
+        <item rule-number="13" dot="0"/>
+        <item rule-number="14" dot="0"/>
+        <item rule-number="15" dot="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="IDN" state="1"/>
+          <transition type="shift" symbol="STR" state="2"/>
+          <transition type="shift" symbol="CHR" state="3"/>
+          <transition type="shift" symbol="INT" state="4"/>
+          <transition type="shift" symbol="FLT" state="5"/>
+          <transition type="shift" symbol="QUOTE" state="6"/>
+          <transition type="shift" symbol="'('" state="7"/>
+          <transition type="goto" symbol="program" state="8"/>
+          <transition type="goto" symbol="sexpr" state="9"/>
+          <transition type="goto" symbol="list" state="10"/>
+          <transition type="goto" symbol="atom" state="11"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="1">
+      <itemset>
+        <item rule-number="15" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="15" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="2">
+      <itemset>
+        <item rule-number="13" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="13" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="3">
+      <itemset>
+        <item rule-number="12" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="12" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="4">
+      <itemset>
+        <item rule-number="11" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="11" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="5">
+      <itemset>
+        <item rule-number="14" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="14" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="6">
+      <itemset>
+        <item rule-number="2" dot="0"/>
+        <item rule-number="3" dot="0"/>
+        <item rule-number="4" dot="0"/>
+        <item rule-number="9" dot="1"/>
+        <item rule-number="10" dot="1"/>
+        <item rule-number="11" dot="0"/>
+        <item rule-number="12" dot="0"/>
+        <item rule-number="13" dot="0"/>
+        <item rule-number="14" dot="0"/>
+        <item rule-number="15" dot="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="IDN" state="1"/>
+          <transition type="shift" symbol="STR" state="2"/>
+          <transition type="shift" symbol="CHR" state="3"/>
+          <transition type="shift" symbol="INT" state="4"/>
+          <transition type="shift" symbol="FLT" state="5"/>
+          <transition type="shift" symbol="'('" state="7"/>
+          <transition type="goto" symbol="sexpr" state="12"/>
+          <transition type="goto" symbol="atom" state="13"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="7">
+      <itemset>
+        <item rule-number="2" dot="0"/>
+        <item rule-number="2" dot="1"/>
+        <item rule-number="3" dot="0"/>
+        <item rule-number="3" dot="1"/>
+        <item rule-number="4" dot="0"/>
+        <item rule-number="4" dot="1"/>
+        <item rule-number="5" dot="0"/>
+        <item rule-number="6" dot="0"/>
+        <item rule-number="7" dot="0"/>
+        <item rule-number="8" dot="0"/>
+        <item rule-number="9" dot="0"/>
+        <item rule-number="10" dot="0"/>
+        <item rule-number="11" dot="0"/>
+        <item rule-number="12" dot="0"/>
+        <item rule-number="13" dot="0"/>
+        <item rule-number="14" dot="0"/>
+        <item rule-number="15" dot="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="IDN" state="1"/>
+          <transition type="shift" symbol="STR" state="2"/>
+          <transition type="shift" symbol="CHR" state="3"/>
+          <transition type="shift" symbol="INT" state="4"/>
+          <transition type="shift" symbol="FLT" state="5"/>
+          <transition type="shift" symbol="OPR" state="14"/>
+          <transition type="shift" symbol="QUOTE" state="6"/>
+          <transition type="shift" symbol="'('" state="7"/>
+          <transition type="shift" symbol="')'" state="15"/>
+          <transition type="goto" symbol="sexpr" state="9"/>
+          <transition type="goto" symbol="list" state="16"/>
+          <transition type="goto" symbol="atom" state="11"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="8">
+      <itemset>
+        <item rule-number="0" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="$end" state="17"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="9">
+      <itemset>
+        <item rule-number="6" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="6" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="10">
+      <itemset>
+        <item rule-number="1" dot="1">
+          <lookaheads>
+            <symbol>$end</symbol>
+          </lookaheads>
+        </item>
+        <item rule-number="2" dot="0"/>
+        <item rule-number="3" dot="0"/>
+        <item rule-number="4" dot="0"/>
+        <item rule-number="7" dot="1"/>
+        <item rule-number="8" dot="1"/>
+        <item rule-number="11" dot="0"/>
+        <item rule-number="12" dot="0"/>
+        <item rule-number="13" dot="0"/>
+        <item rule-number="14" dot="0"/>
+        <item rule-number="15" dot="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="IDN" state="1"/>
+          <transition type="shift" symbol="STR" state="2"/>
+          <transition type="shift" symbol="CHR" state="3"/>
+          <transition type="shift" symbol="INT" state="4"/>
+          <transition type="shift" symbol="FLT" state="5"/>
+          <transition type="shift" symbol="'('" state="7"/>
+          <transition type="goto" symbol="sexpr" state="18"/>
+          <transition type="goto" symbol="atom" state="19"/>
+        </transitions>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="1" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="11">
+      <itemset>
+        <item rule-number="5" dot="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="5" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="12">
+      <itemset>
+        <item rule-number="10" dot="2"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="10" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="13">
+      <itemset>
+        <item rule-number="9" dot="2"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="9" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="14">
+      <itemset>
+        <item rule-number="2" dot="0"/>
+        <item rule-number="3" dot="0"/>
+        <item rule-number="4" dot="0"/>
+        <item rule-number="4" dot="2"/>
+        <item rule-number="5" dot="0"/>
+        <item rule-number="6" dot="0"/>
+        <item rule-number="7" dot="0"/>
+        <item rule-number="8" dot="0"/>
+        <item rule-number="9" dot="0"/>
+        <item rule-number="10" dot="0"/>
+        <item rule-number="11" dot="0"/>
+        <item rule-number="12" dot="0"/>
+        <item rule-number="13" dot="0"/>
+        <item rule-number="14" dot="0"/>
+        <item rule-number="15" dot="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="IDN" state="1"/>
+          <transition type="shift" symbol="STR" state="2"/>
+          <transition type="shift" symbol="CHR" state="3"/>
+          <transition type="shift" symbol="INT" state="4"/>
+          <transition type="shift" symbol="FLT" state="5"/>
+          <transition type="shift" symbol="QUOTE" state="6"/>
+          <transition type="shift" symbol="'('" state="7"/>
+          <transition type="goto" symbol="sexpr" state="9"/>
+          <transition type="goto" symbol="list" state="20"/>
+          <transition type="goto" symbol="atom" state="11"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="15">
+      <itemset>
+        <item rule-number="2" dot="2"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="2" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="16">
+      <itemset>
+        <item rule-number="2" dot="0"/>
+        <item rule-number="3" dot="0"/>
+        <item rule-number="3" dot="2"/>
+        <item rule-number="4" dot="0"/>
+        <item rule-number="7" dot="1"/>
+        <item rule-number="8" dot="1"/>
+        <item rule-number="11" dot="0"/>
+        <item rule-number="12" dot="0"/>
+        <item rule-number="13" dot="0"/>
+        <item rule-number="14" dot="0"/>
+        <item rule-number="15" dot="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="IDN" state="1"/>
+          <transition type="shift" symbol="STR" state="2"/>
+          <transition type="shift" symbol="CHR" state="3"/>
+          <transition type="shift" symbol="INT" state="4"/>
+          <transition type="shift" symbol="FLT" state="5"/>
+          <transition type="shift" symbol="'('" state="7"/>
+          <transition type="shift" symbol="')'" state="21"/>
+          <transition type="goto" symbol="sexpr" state="18"/>
+          <transition type="goto" symbol="atom" state="19"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="17">
+      <itemset>
+        <item rule-number="0" dot="2"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="accept" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="18">
+      <itemset>
+        <item rule-number="8" dot="2"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="8" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="19">
+      <itemset>
+        <item rule-number="7" dot="2"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="7" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="20">
+      <itemset>
+        <item rule-number="2" dot="0"/>
+        <item rule-number="3" dot="0"/>
+        <item rule-number="4" dot="0"/>
+        <item rule-number="4" dot="3"/>
+        <item rule-number="7" dot="1"/>
+        <item rule-number="8" dot="1"/>
+        <item rule-number="11" dot="0"/>
+        <item rule-number="12" dot="0"/>
+        <item rule-number="13" dot="0"/>
+        <item rule-number="14" dot="0"/>
+        <item rule-number="15" dot="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="IDN" state="1"/>
+          <transition type="shift" symbol="STR" state="2"/>
+          <transition type="shift" symbol="CHR" state="3"/>
+          <transition type="shift" symbol="INT" state="4"/>
+          <transition type="shift" symbol="FLT" state="5"/>
+          <transition type="shift" symbol="'('" state="7"/>
+          <transition type="shift" symbol="')'" state="22"/>
+          <transition type="goto" symbol="sexpr" state="18"/>
+          <transition type="goto" symbol="atom" state="19"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="21">
+      <itemset>
+        <item rule-number="3" dot="3"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="3" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="22">
+      <itemset>
+        <item rule-number="4" dot="4"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="4" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+  </automaton>
+</bison-xml-report>
