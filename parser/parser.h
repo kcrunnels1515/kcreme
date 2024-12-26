@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <iostream>
+#include <bits/stdc++.h>
 
 #include "../Token/token.h"
 #include "node.h"
@@ -12,7 +13,7 @@
 struct Parser {
   size_t ind;
   Node* root;
-
+  std::string indent;
   std::vector<Token> in_strm;
   std::vector<uint8_t> s_stk;
   std::vector<Node*> p_stk;
@@ -108,6 +109,10 @@ struct Parser {
   void reduce(uint8_t c);
   void accept();
   void error();
+  void trim(Node* cur);
+  void collapse_list(std::vector<Node*>& cons, Node* cur);
+  void print();
+  void print_node(std::string indent, Node* cur, bool is_last);
   uint8_t ind_conv(TokenType t);
 };
 

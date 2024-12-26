@@ -8,6 +8,7 @@
 #include "../Token/token.h"
 #include <vector>
 
+
 typedef ttmath::Big<TTMATH_BITS(64), TTMATH_BITS(128)> Float;
 typedef ttmath::Int<TTMATH_BITS(64)> Int;
 typedef ttmath::UInt<TTMATH_BITS(64)> Uint;
@@ -31,7 +32,7 @@ struct Node {
   std::vector<Node*> kids;
   Node* parent;
 
-  Node(std::string s, TokenType t) {
+  Node(std::string s, TokenType t) : parent(nullptr) {
     switch (t) {
         case NIL:
           val.str = "NIL";

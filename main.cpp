@@ -120,9 +120,11 @@ int main(int argc, char *argv[]) {
         std::cout << e.what() << std::endl;
       }
 
-      for (Token& t : toks) {
-        t.print();
-      }
+      p.print();
+
+      // for (Token& t : toks) {
+      //   t.print();
+      // }
       //p.parse(line);
       //p.print_parse_tree();
       //p.emit_code();

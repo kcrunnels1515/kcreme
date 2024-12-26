@@ -84,10 +84,124 @@ void Parser::reduce(uint8_t c) {
   } else {
     tmp = new Node("", (TokenType)r[0]);
     for (int i = 0; i < r[1]; ++i) {
-      tmp->kids.push_back(p_stk.back());
+      if (p_stk.back()->token != OP && p_stk.back()->token != CP) {
+        tmp->kids.push_back(p_stk.back());
+        p_stk.back()->parent = tmp;
+      }
       p_stk.pop_back();
     }
     std::reverse(tmp->kids.begin(), tmp->kids.end());
     p_stk.push_back(tmp);
+  }
+}
+
+void Parser::trim(Node* cur) {
+  std::vector<Node*>& kids = cur->kids;
+  switch (cur->token) {
+  case NIL:
+    break;
+  case SEXPR:
+    {
+      if (kids.size() == 0) {
+        cur->token = NIL;
+      } else {
+        // if first element is an operator,
+        // move all children of sexpr to operator
+        // and resize the sexpr child vector
+        // to only contain operator
+        if (kids[0]->token == OPR) {
+          for (int j = 1; j < kids.size(); ++j){
+            kids[0]->kids.push_back(kids[j]);
+          }
+          kids.resize(1);
+        } else if (kids[0]->token == SEXPR) {
+          // first element is lambda function
+
+        } else if (kids[0]->token == ID) {
+          // first element is a named function
+
+        } else if (kids[0]->token == QUOTE) {
+          // quote expression
+
+        } else {
+          // error
+        }
+      }
+    }
+    break;
+  case ID:
+    break;
+  case INT:
+    break;
+  case FLOAT:
+    break;
+  case OPR:
+    msg = "OPR";
+    break;
+  case LIST:
+    {
+      collapse_list(cur->kids, cur);
+    }
+    break;
+  case CHAR:
+    msg = "CHAR";
+    break;
+  case STR:
+    msg = "STR";
+    break;
+  case QUOTE:
+    msg = "QUOTE";
+    break;
+  case OP:
+    msg = "OP";
+    break;
+  case CP:
+    msg = "CP";
+    break;
+  case ATOM:
+    msg = "CP";
+    break;
+  case PGN:
+    msg = "ROOT";
+    break;
+  default:
+    msg = "strange occurrences";
+    break;
+
+  }  
+}
+
+void Parser::print(){
+  print_node("", root, true);
+}
+
+void Parser::print_node(std::string indent, Node* cur, bool is_last) {
+  if( cur != nullptr )
+    {
+        std::cout << indent;
+
+        std::cout << (is_last ? "└──" : "├──" );
+
+        // print the value of the node
+        std::cout << Token::pt(cur->token) << std::endl;
+
+        // enter the next tree level - left and right branch
+        for (int i = 0; i < cur->kids.size(); ++i) {
+          if (i == cur->kids.size() - 1){
+            print_node(indent + (is_last ? "    " : "│   " ), cur->kids[i], true);
+          } else {
+            print_node(indent + (is_last ? "    " : "│   " ), cur->kids[i], true);
+          }
+        }
+    }
+}
+
+void Parser::collapse_list(std::vector<Node*>& cons, Node* cur) {
+  for (Node* i : cur->kids) {
+    if (i->token == LIST){
+      collapse_list(cons,i);
+    } else {
+      cons.push_back(i);
+    }
   }
 }

@@ -26,44 +26,59 @@ struct Token {
   size_t ind;
   TokenType token;
   Token(std::string s, size_t i, TokenType t) : name(s), ind(i), token(t) {}
-  void print() {
-    std::cout << "Token of type ";
-    switch(token){
+  static std::string pt(TokenType t) {
+    std::string msg;
+    switch(t){
       case NIL:
-        std::cout << "NIL";
+        msg = "NIL";
         break;
       case SEXPR:
-        std::cout << "SEXPR";
+        msg = "SEXPR";
         break;
       case ID:
-        std::cout << "ID";
+        msg = "ID";
         break;
       case INT:
-        std::cout << "INT";
+        msg = "INT";
         break;
       case FLOAT:
-        std::cout << "FLOAT";
+        msg = "FLOAT";
         break;
       case OPR:
-        std::cout << "OPR";
+        msg = "OPR";
         break;
       case LIST:
-        std::cout << "LIST";
+        msg = "LIST";
         break;
       case CHAR:
-        std::cout << "CHAR";
+        msg = "CHAR";
         break;
       case STR:
-        std::cout << "STR";
+        msg = "STR";
         break;
       case QUOTE:
-        std::cout << "QUOTE";
+        msg = "QUOTE";
+        break;
+      case OP:
+        msg = "OP";
+        break;
+      case CP:
+        msg = "CP";
+        break;
+      case ATOM:
+        msg = "CP";
+        break;
+      case PGN:
+        msg = "ROOT";
         break;
       default:
-        std::cout << "strange occurrences";
+        msg = "strange occurrences";
         break;
     }
-    std::cout << ": " << name << " @" << ind << std::endl;
+    return msg;
+  }
+  void print() {
+    std::cout << "Token of type" << pt(token) << ": " << name << " @" << ind << std::endl;
   }
 };
 
